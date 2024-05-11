@@ -6,7 +6,9 @@
 #include "numerics_range.hpp"
 #include "tuple.hpp"
 
-#ifndef __clang__
+#include <version>
+
+#if defined(__cpp_lib_generator)
     #include <generator>
 #else
     #include "generator.hpp"
