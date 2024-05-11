@@ -12,7 +12,7 @@ static constexpr auto HEIGHT = Int { 600 };
 static constexpr auto DEPTH  = Int { 100 };
 
 int main() {
-    ankerl::nanobench::Bench().run("multiple for loops", [] static noexcept {
+    ankerl::nanobench::Bench().run("multiple for loops", []() noexcept {
         auto result = Int { 0 };
 
         for (auto x = Int { 0 }; x < WIDTH; ++x)
@@ -22,7 +22,7 @@ int main() {
                 }
     });
 
-    ankerl::nanobench::Bench().run("1D to 3D for loop", [] static noexcept {
+    ankerl::nanobench::Bench().run("1D to 3D for loop", []() noexcept {
         auto result = Int { 0 };
         for (auto i = Int { 0 }; i < WIDTH * HEIGHT * DEPTH; ++i) {
             const auto x = i / (HEIGHT * DEPTH);
@@ -34,14 +34,14 @@ int main() {
     });
 
 
-    ankerl::nanobench::Bench().run("coroutine", [] static noexcept {
+    ankerl::nanobench::Bench().run("coroutine", []() noexcept {
         auto result = Int { 0 };
         for (auto&& [x, y, z] : coroutine::multiRange(WIDTH, HEIGHT, DEPTH)) {
             ankerl::nanobench::doNotOptimizeAway(result += (x + y + z));
         }
     });
 
-    ankerl::nanobench::Bench().run("ranges", [] static noexcept {
+    ankerl::nanobench::Bench().run("ranges", []() noexcept {
         auto result = Int { 0 };
         for (auto&& [x, y, z] : ranges::multiRange(WIDTH, HEIGHT, DEPTH)) {
             ankerl::nanobench::doNotOptimizeAway(result += (x + y + z));
